@@ -87,6 +87,36 @@ class CovidCodeDetails extends Component {
         )
     }	
 
+	renderRevoke() {
+		const { revoked, revokedAt, revokedBy } = this.state.data;
+		if (revoked) {
+			return (
+				<React.Fragment>
+				<Form.Group as={Row} controlId="revokedAt">
+					<Form.Label column sm="2">
+						Revoked at
+					</Form.Label>
+					<Col sm="10">
+						<Moment className="form-control-plaintext" format="LLL">
+							{ revokedAt }
+						</Moment>
+					</Col>
+				</Form.Group>
+				<Form.Group as={Row} controlId="revokedBy">
+					<Form.Label column sm="2">
+						Revoked by
+					</Form.Label>
+					<Col sm="10">
+						<Form.Control plaintext placeholder="Revoked By" defaultValue={ revokedBy } />
+					</Col>
+				</Form.Group>
+				</React.Fragment>
+			);
+		} else {
+			return (<div/>);
+		}
+	}
+	
 	renderIssueLogs() {
 		const { issueLogs } = this.state.data;
 		if (issueLogs === undefined || issueLogs.length === 0) {
@@ -126,7 +156,9 @@ class CovidCodeDetails extends Component {
 								Receive Date
 							</Form.Label>
 							<Col sm="10">
-								<Form.Control plaintext placeholder="Receive Date" defaultValue={ this.state.data.receiveDate } />
+								<Moment className="form-control-plaintext" format="LL">
+									{ this.state.data.receiveDate }
+								</Moment>
 							</Col>
 						</Form.Group>
 						<Form.Group as={Row} controlId="onsetDate">
@@ -134,7 +166,9 @@ class CovidCodeDetails extends Component {
 								Onset Date
 							</Form.Label>
 							<Col sm="10">
-								<Form.Control plaintext placeholder="Onset Date" defaultValue={ this.state.data.onsetDate } />
+								<Moment className="form-control-plaintext" format="LL">
+									{ this.state.data.onsetDate }
+								</Moment>
 							</Col>
 						</Form.Group>
 						<Form.Group as={Row} controlId="authorisationCode">
@@ -145,7 +179,26 @@ class CovidCodeDetails extends Component {
 								<Form.Control plaintext placeholder="Authorisation Code" defaultValue={ this.state.data.authorisationCodePretty } />
 							</Col>
 						</Form.Group>
-						<Form.Group as={Row} controlId="receiveDate">
+						<Form.Group as={Row} controlId="registeredAt">
+							<Form.Label column sm="2">
+								Registered at
+							</Form.Label>
+							<Col sm="10">
+								<Moment className="form-control-plaintext" format="LLL">
+									{ this.state.data.registeredAt }
+								</Moment>
+							</Col>
+						</Form.Group>
+						<Form.Group as={Row} controlId="registeredBy">
+							<Form.Label column sm="2">
+								Registered by
+							</Form.Label>
+							<Col sm="10">
+								<Form.Control plaintext placeholder="Registered By" defaultValue={ this.state.data.registeredBy } />
+							</Col>
+						</Form.Group>
+						{ this.renderRevoke() }
+						<Form.Group as={Row} controlId="issueLogs">
 							<Table responsive>
 								<thead>
 									<tr>
