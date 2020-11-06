@@ -26,7 +26,7 @@ ReactDOM.render(
     ({login, logout, authenticationState, error, accountInfo}) => {
           return (
             <React.StrictMode>
-              <App login={login} logout={logout} authenticationState={authenticationState} accountInfo={accountInfo}/>
+              <App login={login} logout={logout} authenticationState={authenticationState} accountInfo={accountInfo} error={error}/>
             </React.StrictMode>
                 );
     }
