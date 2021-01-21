@@ -383,6 +383,82 @@ class CovidCodesList extends Component {
 		}
 	}
 
+	async downloadCsv() {
+
+		const { history } = this.props;
+
+		this.setState({refreshing: true});
+
+		const urlBase = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BACKEND_BASE_URL : 'http://localhost:8080';
+		const token = await authProvider.getIdToken();
+
+		const { query, includeClosed, page, pageSize, sort, order } = this.state.filter;
+		
+		let url = urlBase + "/v1/csv"
+			+ "?offset=" + new Date().getTimezoneOffset()/60
+			
+		console.log(url);
+		
+        return fetch(url, {
+            method: "GET",
+            headers: {
+				Authorization: 'Bearer ' + token.idToken.rawIdToken,
+            }
+        })
+		.then(
+
+			(result) => { 
+				if (!result.ok)	{
+					if (result.status === 401) {
+						history.push('/unauthorised');
+					} else {
+						result.text().then((message) => {
+							this.setState({
+								isLoaded: false,
+								refreshing: false,
+								error: message || "Unexpected error"
+							});
+						})
+					}
+				} else {
+					const filename = "CovidCodes.csv";
+					if (result.headers.has('Content-Disposition')) {
+					  filename = result.headers.get('Content-Disposition')
+						.split(';')
+						.find(n => n.includes('filename='))
+						.replace('filename=', '')
+						.trim();
+					}
+					result.blob().then(blob => {
+						var url = window.URL.createObjectURL(blob);
+						var a = document.createElement('a');
+						a.href = url;
+						a.download = "" + filename;
+						document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+						a.click();    
+						a.remove();  //afterwards we remove the element again    
+						this.setState({
+							isLoaded: true,
+							refreshing: false
+						});
+					});
+				}
+			},
+
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+                this.setState({
+					isLoaded: false,
+					refreshing: false,
+					error
+                });
+            }
+        )
+	
+	}
+	
 	browseCovidCodes = () => {
 		const { history } = this.props;
 		const { isLoaded, refreshing } = this.state;
@@ -390,8 +466,11 @@ class CovidCodesList extends Component {
 			<React.Fragment>
 				<Navbar bg="light" expand="md">
 					<Container fluid="md">
-						<Nav.Item className="w-100 d-none d-md-inline-block">
+						<Nav.Item className="mr-1 d-none d-md-inline-block">
 							<Button onClick={() => { history.push('/covid-codes/new'); }}>New</Button>
+						</Nav.Item>
+						<Nav.Item className="w-100 d-none d-md-inline-block">
+							<Button onClick={ this.downloadCsv.bind(this) }>Download CSV</Button>
 						</Nav.Item>
 						<Nav.Item className="w-100">
 							<Form>
