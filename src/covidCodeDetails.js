@@ -145,7 +145,7 @@ class CovidCodeDetails extends Component {
 					<Form className="mt-3">
 						<Form.Group as={Row} controlId="specimenNumber">
 							<Form.Label column sm="2">
-								Specimen Number
+								Case Number Code
 							</Form.Label>
 							<Col sm="10">
 								<Form.Control plaintext placeholder="Specimen Number" defaultValue={ this.state.data.specimenNumber } />
@@ -153,7 +153,7 @@ class CovidCodeDetails extends Component {
 						</Form.Group>
 						<Form.Group as={Row} controlId="receiveDate">
 							<Form.Label column sm="2">
-								Receive Date
+								Isolation start date
 							</Form.Label>
 							<Col sm="10">
 								<Moment className="form-control-plaintext" format="LL">
@@ -163,7 +163,7 @@ class CovidCodeDetails extends Component {
 						</Form.Group>
 						<Form.Group as={Row} controlId="onsetDate">
 							<Form.Label column sm="2">
-								Onset Date
+								Infectivity onset date
 							</Form.Label>
 							<Col sm="10">
 								<Moment className="form-control-plaintext" format="LL">

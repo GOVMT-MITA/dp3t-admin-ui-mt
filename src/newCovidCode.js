@@ -191,7 +191,7 @@ class NewCovidCode extends Component {
 		let receiveDateValid=true;
 		if (covidCode.receiveDate === "") {
 			receiveDateValid = false;
-			newValidation.receiveDate = {wasInvalid: true, valid: false, message: "Receive date is mandatory"};
+			newValidation.receiveDate = {wasInvalid: true, valid: false, message: "Isolation start date is mandatory"};
 		}
 		if (receiveDate.isAfter(today)) {
 			receiveDateValid = false;
@@ -206,15 +206,15 @@ class NewCovidCode extends Component {
 		let onsetDateValid=true;
 		if (covidCode.onsetDate === "") {
 			onsetDateValid = false;
-			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Onset date is mandatory"};
+			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Infectivity onset date is mandatory"};
 		}
 		if (onsetDate.isAfter(today)) {
 			onsetDateValid = false;
-			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Cannot be in the future"};
+			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Infectivity onset date cannot be in the future"};
 		}
 		if (onsetDate.isAfter(receiveDate)) {
 			onsetDateValid = false;
-			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Onset date cannot be after Receive date"};
+			newValidation.onsetDate = {wasInvalid: true, valid: false, message: "Infectivity onset date cannot be after isolation start date"};
 		}
 		if (onsetDateValid) {
 			newValidation.onsetDate = {...validation.onsetDate, valid: true, message: "Seems fine now"};
@@ -295,10 +295,10 @@ class NewCovidCode extends Component {
 				<Form className="mt-3">
 					<Form.Group as={Row} controlId="specimenNumber">
 						<Form.Label column sm="2">
-							Specimen Number
+							Case Number Code
 						</Form.Label>
 						<Col sm="10">
-							<Form.Control placeholder="Specimen Number" 
+							<Form.Control placeholder="e.g. CM012345C" 
 								value={this.state.covidCode.specimenNumber}
 								onChange={e => this.handleChange(e)}
 								autoComplete="off"
@@ -309,7 +309,7 @@ class NewCovidCode extends Component {
 					</Form.Group>
 					<Form.Group as={Row} controlId="receiveDate">
 						<Form.Label column sm="2">
-							Receive Date
+							Isolation start date
 						</Form.Label>
 						<Col sm="10">
 							<DayPickerInput 
@@ -322,10 +322,10 @@ class NewCovidCode extends Component {
 																placement="left"
 																overlay={
 																	<Popover id={`onset-date-popover`}>
-																		<Popover.Title as="h3">Receive Date</Popover.Title>
+																		<Popover.Title as="h3">Isolation start date</Popover.Title>
 																		<Popover.Content>
 																			The date on which the sample was received by the laboratory to be tested
-																			for COVID-19.
+																			for COVID-19 and patient was advised to isolate.
 																		</Popover.Content>
 																	</Popover>
 																	}>

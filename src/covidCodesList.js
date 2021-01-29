@@ -494,9 +494,9 @@ class CovidCodesList extends Component {
 						<Table responsive striped hover>
 							<thead>
 								<tr>
-									<th className="nces-sortable-col">{ this.renderSortStatus("Specimen No.","specimen_no") }</th>
-									<th className="nces-sortable-col">{ this.renderSortStatus("Receive Date","receive_date") }</th>
-									<th className="nces-sortable-col d-none d-md-table-cell">{ this.renderSortStatus("Onset Date", "onset_date") }</th>
+									<th className="nces-sortable-col">{ this.renderSortStatus("Case Number Code","specimen_no") }</th>
+									<th className="nces-sortable-col">{ this.renderSortStatus("Isolation Start Date","receive_date") }</th>
+									<th className="nces-sortable-col d-none d-md-table-cell">{ this.renderSortStatus("Infec. Onset Date", "onset_date") }</th>
 									<th className="d-none d-md-table-cell">Risk Level</th>
 									<th style={{minWidth: "150px"}}>Auth. Code</th>
 									<th className="nces-sortable-col d-none d-md-table-cell">{ this.renderSortStatus("Registered","registered_at") }</th>
