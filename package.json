@@ -9,7 +9,7 @@
     "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "msal": "^1.4.3",
     "node-forge": ">=0.10.0",
     "normalize.css": "^8.0.1",
